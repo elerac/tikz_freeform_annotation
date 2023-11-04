@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+
+\title{TikZ Freeform Annotation}
+\author{elerac}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Showcase}
+
+\begin{figure}[tbh]
+    \centering
+    \begin{minipage}{0.5\hsize}
+        \centering
+        \includegraphics[width=0.98\hsize]{figures/bunny.jpg}
+        (a) Standard includegraphics
+    \end{minipage}%
+    \begin{minipage}{0.5\hsize}
+        \centering
+        \scalebox{0.98}{
+            \input{figures/bunny_annotate}
+            }
+        (b) With freeform annotation
+    \end{minipage}%
+    \caption{Figure showing two images side by side, with the left image being a standard includegraphics and the right image being an annotated version using freeform annotation with the TikZ package.}
+\end{figure}
+
+\end{document}
