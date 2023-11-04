@@ -1,0 +1,5 @@
+__pycache__/*
+documents/*
+
+!documents/main.pdf
+!documents/teaser.png
