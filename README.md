@@ -8,13 +8,13 @@ Select arbitrary areas using Photoshop's powerful selection tools and export the
 
 ### Preparation of SVG
 
-1. Select an area using Photoshop.
-    - Select the area using the selection tools, such as "Object Selection Tool" or "Lasso Tool."
+1. Select areas using Photoshop.
+    - Select a area using the selection tools, such as "Object Selection Tool" or "Lasso Tool."
     - Convert the selection to a path. You can do this by right-clicking on the selection and selecting "Make Work Path...".
-    - If you want to select multiple areas, you must drag the work path to the "Create new path" icon in the "Paths" panel.
+    - If you want to select multiple areas, you must drag the work path to the "Create new path" icon in the "Paths" panel or rename the work path to a unique name.
     - Export the path as Illustrator file (.ai) using "File > Export > Paths to Illustrator...". Choose "All Paths" in the dialog.
 2. Convert to SVG using Illustrator.
-    - Open the Illustrator file (.ai) in Illustrator.
+    - Open the exported Illustrator file (.ai) in Illustrator.
     - Save the file as SVG using "File > Export > Export for Screens...". Choose "SVG" in the dialog.
 
 Note that you can use alternative software instead of Photoshop and Illustrator.
