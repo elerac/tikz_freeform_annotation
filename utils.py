@@ -87,36 +87,36 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
             (dx, dy), i = next_multiple_numbers(d, i, 2)
             x += dx
             y += dy
-            code += f" -- ++({dx:.3f}, {dy:.3f})"
+            code += f" -- ++({dx:.5g}, {dy:.5g})"
         elif path_type == "h":
             # svg: h dx
             # tikz: ++(dx, 0)
             (dx,), i = next_multiple_numbers(d, i, 1)
             x += dx
-            code += f" -- ++({dx:.3f}, 0)"
+            code += f" -- ++({dx:.5g}, 0)"
         elif path_type == "H":
             # svg: H x
             # tikz: ++(x, 0)
             (x,), i = next_multiple_numbers(d, i, 1)
-            code += f" -- ({x:.3f}, {y:.3f})"
+            code += f" -- ({x:.5g}, {y:.5g})"
         elif path_type == "v":
             # svg: v dy
             # tikz: ++(0, dy)
             (dy,), i = next_multiple_numbers(d, i, 1)
             y += dy
-            code += f" -- ++(0, {dy:.3f})"
+            code += f" -- ++(0, {dy:.5g})"
         elif path_type == "V":
             # svg: V y
             # tikz: ++(0, y)
             (y,), i = next_multiple_numbers(d, i, 1)
-            code += f" -- ({x:.3f}, {y:.3f})"
+            code += f" -- ({x:.5g}, {y:.5g})"
         elif path_type == "l":
             # svg: l dx dy
             # tikz: ++(dx, dy)
             (dx, dy), i = next_multiple_numbers(d, i, 2)
             x += dx
             y += dy
-            code += f" -- ++({dx:.3f}, {dy:.3f})"
+            code += f" -- ++({dx:.5g}, {dy:.5g})"
         elif path_type == "c":
             # svg: c dx1 dy1, dx2 dy2, dx dy
             # tikz: .. controls (x + dx1, y + dy1) and (x + dx2, y + dy2) .. ++(dx, dy)
@@ -127,7 +127,7 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
             y2 = y + dy2
             x += dx
             y += dy
-            code += f" .. controls ({x1:.3f}, {y1:.3f}) and ({x2:.3f}, {y2:.3f}) .. ++({dx:.3f}, {dy:.3f})"
+            code += f" .. controls ({x1:.5g}, {y1:.5g}) and ({x2:.5g}, {y2:.5g}) .. ++({dx:.5g}, {dy:.5g})"
         elif path_type == "s":
             # svg: s dx2 dy2, dx dy
             # tikz: .. controls (x - dx2, y - dy2) and (x + dx2, y + dy2) .. ++(dx, dy)
@@ -138,7 +138,7 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
             y2 = y + dy2
             x += dx
             y += dy
-            code += f" .. controls ({x1:.3f}, {y1:.3f}) and ({x2:.3f}, {y2:.3f}) .. ++({dx:.3f}, {dy:.3f})"
+            code += f" .. controls ({x1:.5g}, {y1:.5g}) and ({x2:.5g}, {y2:.5g}) .. ++({dx:.5g}, {dy:.5g})"
         elif path_type == "z" or path_type == "Z":
             code += " -- cycle"
             break
@@ -165,7 +165,7 @@ def rect_to_tikz(rect: xml.etree.ElementTree.Element, draw_options: str = "") ->
     class_name = rect.attrib["class"]
 
     code = f"\\draw[{draw_options}] "
-    code += f"({x0:.3f}, {y0:.3f}) rectangle ({x0 + x1:.3f}, {y0 + y1:.3f}); % {class_name}"
+    code += f"({x0:.5g}, {y0:.5g}) rectangle ({x0 + x1:.5g}, {y0 + y1:.5g}); % {class_name}"
     code += "\n"
 
     return code
