@@ -69,7 +69,7 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
 
     code = f"\\draw[{draw_options}] "
 
-    i = 0  # index into d
+    i = 0  # index in d
     x = 0  # current x coordinate
     y = 0  # current y coordinate
     path_type = None
