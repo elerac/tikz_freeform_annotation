@@ -146,8 +146,8 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
             raise ValueError(f"Unsupported path type: {path_type}")
 
         if is_first:
-            # Delete first "--"
-            code = code.replace("--", "", 1)
+            # Delete first " -- "
+            code = code.replace(" -- ", "", 1)
             is_first = False
 
     code += f"; % {class_name}"
