@@ -10,8 +10,9 @@ def main():
     tree = args.input
     root = tree.getroot()
 
+    # settings
     indent = " " * 4
-
+    color_palette = ["red", "green", "blue", "cyan", "magenta", "yellow", "brown", "lime", "olive", "orange", "pink", "purple", "teal", "violet"]
     filename_image = "path to image"
 
     # get the svg dimensions
@@ -21,18 +22,17 @@ def main():
     height = max_y - min_y
 
     code = ""
-    code += f"\\begin{{tikzpicture}}[x=\\linewidth/{max(width, height):.3f}, y=-\\linewidth/{max(width, height):.3f}, transform shape]\n"
-
-    # image
-    code += indent + f"\\node[above right, inner sep=0] (image) at (0,0) {{\\includegraphics[width=\\hsize]{{{filename_image}}}}};\n"
-
+    code += f"\\begin{{tikzpicture}}[x=\\linewidth/{max(width, height):.3f}, y=-\\linewidth/{max(width, height):.3f}, transform shape, scale=1.0]\n"
+    code += indent + f"\\node[inner sep=0] (image) at (0,0) {{\\includegraphics[width=\\hsize]{{{filename_image}}}}};\n"
     code += indent + "\\begin{scope}[shift={(image.north west)}]\n"
 
-    for rect in root.findall(".//{http://www.w3.org/2000/svg}rect"):
-        code += indent * 2 + rect_to_tikz(rect, draw_options="")
-
     for path in root.findall(".//{http://www.w3.org/2000/svg}path"):
-        code += indent * 2 + path_to_tikz(path, draw_options="")
+        color = color_palette.pop(0) if color_palette else ""
+        code += indent * 2 + path_to_tikz(path, draw_options=f"{color}")
+
+    for rect in root.findall(".//{http://www.w3.org/2000/svg}rect"):
+        color = color_palette.pop(0) if color_palette else ""
+        code += indent * 2 + rect_to_tikz(rect, draw_options=f"{color}")
 
     code += indent + "\\end{scope}\n"
     code += "\\end{tikzpicture}\n"
