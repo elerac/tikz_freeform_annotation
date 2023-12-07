@@ -62,7 +62,7 @@ def next_multiple_numbers(string: str, start: int, n: int) -> Tuple[List[float],
     return numbers, start
 
 
-def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") -> str:
+def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "", g: int = 5) -> str:
     """Convert an SVG path to a TikZ path."""
     d = path.attrib["d"]
     class_name = path.attrib["class"]
@@ -87,36 +87,36 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
             (dx, dy), i = next_multiple_numbers(d, i, 2)
             x += dx
             y += dy
-            code += f" -- ++({dx:.5g}, {dy:.5g})"
+            code += f" -- ++({dx:.{g}g}, {dy:.{g}g})"
         elif path_type == "h":
             # svg: h dx
             # tikz: ++(dx, 0)
             (dx,), i = next_multiple_numbers(d, i, 1)
             x += dx
-            code += f" -- ++({dx:.5g}, 0)"
+            code += f" -- ++({dx:.{g}g}, 0)"
         elif path_type == "H":
             # svg: H x
             # tikz: ++(x, 0)
             (x,), i = next_multiple_numbers(d, i, 1)
-            code += f" -- ({x:.5g}, {y:.5g})"
+            code += f" -- ({x:.{g}g}, {y:.{g}g})"
         elif path_type == "v":
             # svg: v dy
             # tikz: ++(0, dy)
             (dy,), i = next_multiple_numbers(d, i, 1)
             y += dy
-            code += f" -- ++(0, {dy:.5g})"
+            code += f" -- ++(0, {dy:.{g}g})"
         elif path_type == "V":
             # svg: V y
             # tikz: ++(0, y)
             (y,), i = next_multiple_numbers(d, i, 1)
-            code += f" -- ({x:.5g}, {y:.5g})"
+            code += f" -- ({x:.{g}g}, {y:.{g}g})"
         elif path_type == "l":
             # svg: l dx dy
             # tikz: ++(dx, dy)
             (dx, dy), i = next_multiple_numbers(d, i, 2)
             x += dx
             y += dy
-            code += f" -- ++({dx:.5g}, {dy:.5g})"
+            code += f" -- ++({dx:.{g}g}, {dy:.{g}g})"
         elif path_type == "c":
             # svg: c dx1 dy1, dx2 dy2, dx dy
             # tikz: .. controls (x + dx1, y + dy1) and (x + dx2, y + dy2) .. ++(dx, dy)
@@ -127,7 +127,7 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
             y2 = y + dy2
             x += dx
             y += dy
-            code += f" .. controls ({x1:.5g}, {y1:.5g}) and ({x2:.5g}, {y2:.5g}) .. ++({dx:.5g}, {dy:.5g})"
+            code += f" .. controls ({x1:.{g}g}, {y1:.{g}g}) and ({x2:.{g}g}, {y2:.{g}g}) .. ++({dx:.{g}g}, {dy:.{g}g})"
         elif path_type == "s":
             # svg: s dx2 dy2, dx dy
             # tikz: .. controls (x - dx2, y - dy2) and (x + dx2, y + dy2) .. ++(dx, dy)
@@ -138,7 +138,7 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
             y2 = y + dy2
             x += dx
             y += dy
-            code += f" .. controls ({x1:.5g}, {y1:.5g}) and ({x2:.5g}, {y2:.5g}) .. ++({dx:.5g}, {dy:.5g})"
+            code += f" .. controls ({x1:.{g}g}, {y1:.{g}g}) and ({x2:.{g}g}, {y2:.{g}g}) .. ++({dx:.{g}g}, {dy:.{g}g})"
         elif path_type == "z" or path_type == "Z":
             code += " -- cycle"
             break
@@ -156,7 +156,7 @@ def path_to_tikz(path: xml.etree.ElementTree.Element, draw_options: str = "") ->
     return code
 
 
-def rect_to_tikz(rect: xml.etree.ElementTree.Element, draw_options: str = "") -> str:
+def rect_to_tikz(rect: xml.etree.ElementTree.Element, draw_options: str = "", g: int = 1) -> str:
     """Convert an SVG rect to a TikZ path."""
     x0 = float(rect.attrib["x"])
     y0 = float(rect.attrib["y"])
@@ -165,7 +165,7 @@ def rect_to_tikz(rect: xml.etree.ElementTree.Element, draw_options: str = "") ->
     class_name = rect.attrib["class"]
 
     code = f"\\draw[{draw_options}] "
-    code += f"({x0:.5g}, {y0:.5g}) rectangle ({x0 + x1:.5g}, {y0 + y1:.5g}); % {class_name}"
+    code += f"({x0:.{g}g}, {y0:.{g}g}) rectangle ({x0 + x1:.{g}g}, {y0 + y1:.{g}g}); % {class_name}"
     code += "\n"
 
     return code
