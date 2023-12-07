@@ -2,11 +2,9 @@
 
 ![teaser](documents/teaser.png)
 
-Select arbitrary areas using Photoshop's powerful selection tools and export them as paths with Illustrator. This script converts the paths to TikZ code and allows you to annotate the freeform area in your LaTeX document.
+Select arbitrary areas using Photoshop's powerful selection tools and draw the selected areas in TikZ. TikZ is beneficial to change the appearance of the path (e.g., color, line width, dash pattern, etc.) without modifying the image file. This repository contains a script to convert the path exported from Photoshop to TikZ code.
 
-## Usage
-
-### Preparation of SVG
+## Preparation of SVG
 
 1. Select areas using Photoshop.
     - Select a area using the selection tools, such as "Object Selection Tool" or "Lasso Tool."
@@ -19,7 +17,7 @@ Select arbitrary areas using Photoshop's powerful selection tools and export the
 
 Note that you can use alternative software instead of Photoshop and Illustrator.
 
-### Convert SVG to TikZ
+## Convert SVG to TikZ
 
 Run the script to convert the SVG file to TikZ code.
 
@@ -30,29 +28,26 @@ python svg2tikz.py figures/bunny.svg > figures/bunny_annotate.tex
 The exported TikZ code is as follows (only the part of the path is shown).
 
 ```tex
-\begin{tikzpicture}[x=\linewidth/612.000, y=-\linewidth/612.000, transform shape]
-    \node[above right, inner sep=0] (image) at (0,0) {\includegraphics[width=\hsize]{path to image}};
+\begin{tikzpicture}[x=\linewidth/612.000, y=-\linewidth/612.000, transform shape, scale=1.0]
+    \node[inner sep=0] (image) at (0,0) {\includegraphics[width=\hsize]{path to image}};
     \begin{scope}[shift={(image.north west)}]
         \draw[] ++(303.000, 151.000) -- ++(7.000, 0) <!-- and continue... -->;
     \end{scope}
 \end{tikzpicture}
 ```
 
-Rewrite the path to the image (such as `\includegraphics[width=\hsize]{figures/bunny.jpg}`) in the code.
+Rewrite the path to the image in the code. For example, `\includegraphics[width=\hsize]{figures/bunny.jpg}`.
 
 This code can be included in your LaTeX document as a tikzpicture.
 
-### Compile LaTeX
+## Compile LaTeX
 
 You can compile the LaTeX document as usual.
 
 ```tex
 \begin{figure}[tbh]
     \centering
-    \scalebox{0.98}
-    {
-        \input{figures/bunny_annotate}
-    }
+    \scalebox{0.98}{\input{figures/bunny_annotate}}
     \caption{Caption}
     \label{fig:label}
 \end{figure}
